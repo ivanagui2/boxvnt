@@ -10,12 +10,25 @@
 #include <miniport.h>
 #include <ntddvdeo.h>
 #include <video.h>
-#include <dderror.h>
 #include <stddef.h>
 
 #include "videomp.h"
 #include "boxv.h"
 
+/* Accommodate incomplete DDK headers shipped with Open Watcom 1.9. */
+#ifndef SIZE_OF_NT4_VIDEO_HW_INITIALIZATION_DATA
+
+#define SIZE_OF_NT4_VIDEO_HW_INITIALIZATION_DATA    FIELD_OFFSET( VIDEO_HW_INITIALIZATION_DATA, HwStartDma )
+#define SIZE_OF_W2K_VIDEO_HW_INITIALIZATION_DATA    FIELD_OFFSET( VIDEO_HW_INITIALIZATION_DATA, Reserved )
+#define SIZE_OF_WXP_VIDEO_HW_INITIALIZATION_DATA    (SIZE_OF_W2K_VIDEO_HW_INITIALIZATION_DATA + sizeof( ULONG ))
+
+#include <winerror.h>   /* This should really be dderror.h... */
+
+#else
+
+#include <dderror.h>
+
+#endif
 
 /* Number of PCI access ranges. */
 #define NUM_PCI_RANGES      3
