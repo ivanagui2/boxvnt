@@ -7,3 +7,5 @@ syntax: glob
 *.obj
 *.map
 *.err
+dist
+videomp.img
