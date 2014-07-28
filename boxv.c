@@ -1,3 +1,27 @@
+/*****************************************************************************
+
+Copyright (c) 2012  Michal Necasek
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+*****************************************************************************/
+
 #include "boxv.h"
 #include "boxv_io.h"
 
@@ -109,7 +133,7 @@ typedef struct {
     v_byte          seq[5];         /* Sequencer registers. */
     v_byte          crtc[25];       /* CRTC registers. */
     v_byte          gctl[9];        /* Graphics controller registers. */
-    v_byte          atr[21];        /* Attribute registers. */        
+    v_byte          atr[21];        /* Attribute registers. */
 } v_vgaregs;
 
 /* A structure fully describing a graphics or text mode. */
@@ -119,7 +143,7 @@ typedef struct {
     int             yres;           /* Vertical (Y) resolution. */
     int             bpp;            /* Bits per pixel. */
     int             ext;            /* Non-zero for extended modes. */
-    v_vgaregs      *vgaregs;       /* Contents of VGA registers. */ 
+    v_vgaregs      *vgaregs;       /* Contents of VGA registers. */
 } v_mode;
 
 v_vgaregs       vga_regs_ext = {
@@ -182,7 +206,7 @@ v_mode          *mode_list[] = {
     NULL
 };
 
-/* Write a single value to an indexed register at a specified 
+/* Write a single value to an indexed register at a specified
  * index. Suitable for the CRTC or graphics controller.
  */
 static void vid_wridx( void *cx, int idx_reg, int idx, v_byte data )
@@ -201,7 +225,7 @@ static void vid_wridx_s( void *cx, int idx_reg, int count, v_byte *data )
         vid_wridx( cx, idx_reg, idx, data[idx] );   /* Write index/data. */
 }
 
-/* Program a sequence of bytes into the attribute controller, starting 
+/* Program a sequence of bytes into the attribute controller, starting
  * at index 0. Note: This function may not be interrupted by code which
  * also accesses the attribute controller.
  */
@@ -301,12 +325,12 @@ int BOXV_ext_mode_set( void *cx, int xres, int yres, int bpp, int v_xres, int v_
     vid_wridx( cx, VGA_SEQUENCER, VGA_SR_RESET, VGA_SR0_NORESET );
 
     /* Re-enable palette. */
-    vid_outb( cx, VGA_ATTR_W, 0x20 );               
+    vid_outb( cx, VGA_ATTR_W, 0x20 );
 
     return( 0 );
 }
 
-/* Set the requested mode (text or graphics). 
+/* Set the requested mode (text or graphics).
  * Returns non-zero value on failure.
  */
 int BOXV_mode_set( void *cx, int mode_no )

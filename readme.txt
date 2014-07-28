@@ -37,3 +37,15 @@ for Windows NT 3.x and vidmini.inf for Windows NT 4 and later versions.
 installation media is required and should be copied to the directory which
 contains the INF file. For Windows NT 4.0 and later, framebuf.dll
 is already preinstalled on the system.
+
+
+ Building
+
+ The miniport is designed to be built with Open Watcom C/C++ 1.9 or later.
+Windows has been tested as a build host, but it is likely that other host
+platforms can be used with minor changes.
+
+
+ Licensing
+
+ The source code is published under the MIT license.
